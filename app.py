@@ -36,7 +36,7 @@ def prcp():
     date = dt.date(2017,8,23)
     yearago= date-dt.timedelta(days=365)
     
-    prcpData = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date>yearago)
+    prcpData = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date>yearago).order_by(Measurement.date)
 
     prcpList = []
     for row in prcpData:
@@ -63,7 +63,7 @@ def tobs():
     date = dt.date(2017,8,23)
     yearago= date-dt.timedelta(days=365)
 
-    tobsData = session.query(Measurement.date, Measurement.tobs).filter(Measurement.date>yearago)
+    tobsData = session.query(Measurement.date, Measurement.tobs).filter(Measurement.date>yearago).order_by(Measurement.date)
 
     tobsList = []
     for row in tobsData:
