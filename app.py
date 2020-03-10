@@ -67,13 +67,20 @@ def tobs():
 
     tobsList = []
     for row in tobsData:
-        tobsList.append({"date":row[0], "tobs":row[1]})
+        tobsList.append({row[0]:row[1]})
 
     return jsonify(tobsList)
 
 
 @app.route("/api/v1.0/<start>")
 def dates(start):
+
+    engine = create_engine("sqlite:///hawaii.sqlite")
+    Base = automap_base()
+    Base.prepare(engine, reflect=True)
+    Measurement = Base.classes.measurement
+    Station = Base.classes.station
+    session = Session(engine)
     
     startDate = dt.datetime.strptime(start, '%Y-%m-%d')
 
@@ -89,6 +96,13 @@ def dates(start):
 
 @app.route("/api/v1.0/<start>/<end>")
 def startEnd(start, end):
+    engine = create_engine("sqlite:///hawaii.sqlite")
+    Base = automap_base()
+    Base.prepare(engine, reflect=True)
+    Measurement = Base.classes.measurement
+    Station = Base.classes.station
+    session = Session(engine)
+
     startDate = dt.datetime.strptime(start, '%Y-%m-%d')
     endDate = dt.datetime.strptime(end, '%Y-%m-%d')
 
